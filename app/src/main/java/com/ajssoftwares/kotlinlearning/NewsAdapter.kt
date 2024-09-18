@@ -1,6 +1,7 @@
 package com.ajssoftwares.kotlinlearning
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,15 @@ class NewsAdapter(private var context : Context, private var list : List<Article
         return list.size
     }
 
-    override fun onBindViewHolder(holder: NewsVH, position: Int) {
+    override fun onBindViewHolder(holder: NewsVH, position : Int) {
         holder.binding.tvNewsTitle.text = list[position].title
         Glide.with(context).load(list[position].urlToImage).into(holder.binding.ivNews)
+
+        holder.itemView.setOnClickListener {
+            context.startActivity(Intent(context, NewsDetailActivity::class.java)
+                .putExtra("position", position)
+                .putExtra("newsList", ArrayList(list))
+            )
+        }
     }
 }
